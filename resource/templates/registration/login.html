@@ -1,0 +1,14 @@
+{% extends 'resource/main.html' %}
+
+{% block content %}
+<div class="text-center mt-4">
+    <h3> Login Page</h3>
+</div>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <br>
+    <button type="submit" class="btn btn-dark">Smash</button>
+</form>
+
+{% endblock %}

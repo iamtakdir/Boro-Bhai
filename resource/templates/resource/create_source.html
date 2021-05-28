@@ -1,0 +1,13 @@
+{% extends 'resource/main.html' %}
+
+{% block content %}
+
+<h3>Create NOW</h3>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Smash</button>
+</form>
+
+{% endblock %}
