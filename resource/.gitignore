@@ -72,7 +72,7 @@ pytestdebug.log
 *.mo
 
 # Django stuff:
-.sqlite3
+*.sqlite3
 # Flask stuff:
 instance/
 .webassets-cache
