@@ -1,0 +1,15 @@
+{% extends 'resource/main.html' %}
+
+{% block content %}
+
+<h3>Update Page </h3>
+<div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-success">Smash</button>
+    </form>
+    <a href="{% url 'delete_source' source.id %}" class="btn btn-danger">Destroy</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'resource/main.html' %}
+
+{% block content %}
+
+<h3> Are you sure you want to delete this Resource ? </h3>
+<div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-danger">Smash</button>
+    </form>
+    <br>
+    <h2> <a href="{% url 'detail_source' source.id %}">{{source.title}}</a></h2>
+</div>
+
+{% endblock %}

@@ -10,6 +10,10 @@ def home (request):
     title = 'Hello there'
     return render(request, 'resource/home.html' , {'title':title})
 
+def dashboard(request):
+
+    return render (request, 'resource/dashboard.html')
+
 class Signup(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('home')
@@ -29,10 +33,27 @@ class CreateSource(generic.CreateView):
     model = Source
     fields= ['title']
     template_name = 'resource/create_source.html'
-    success_url= reverse_lazy ('home')
+    success_url= reverse_lazy ('dashboard')
 
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         super(CreateSource, self).form_valid(form)
-        return redirect ('home')
+        return redirect ('dashboard')
+
+
+class DetailSource (generic.DetailView):
+    model = Source
+    template_name= 'resource/details.html'
+
+class UpdateSource (generic.UpdateView):
+    model = Source
+    template_name= 'resource/update.html'
+    fields= ['title']
+    success_url= reverse_lazy('dashboard')
+
+class DeleteSource (generic.DeleteView):
+    model = Source
+    template_name= 'resource/delete.html'
+    success_url= reverse_lazy('dashboard')
+
