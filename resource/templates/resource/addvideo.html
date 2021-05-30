@@ -1,0 +1,17 @@
+{% extends 'resource/main.html' %}
+
+{% block content %}
+
+<h3>Add videos to your resource</h3>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Smash</button>
+</form>
+<h2>OR Search Resource</h2>
+<form action="" method="POST">
+    {{search}}
+</form>
+
+{% endblock %}

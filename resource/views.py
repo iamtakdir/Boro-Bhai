@@ -4,6 +4,8 @@ from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate , login
 from .models import *
+from .forms import VideoForm, SearchForm
+
 
 
 def home (request):
@@ -56,4 +58,26 @@ class DeleteSource (generic.DeleteView):
     model = Source
     template_name= 'resource/delete.html'
     success_url= reverse_lazy('dashboard')
+
+def add_video(request, pk):
+    form = VideoForm()
+    search= SearchForm()
+
+    if request.method == 'POST':
+        data_form = VideoForm(request.POST)
+        if data_form.is_valid():
+            video = Video()
+            video.url =data_form.cleaned_data['url']
+            video.title =data_form.cleaned_data['title']
+            video.youtube_id =data_form.cleaned_data['youtube_id']
+            video.source = Source.objects.get(pk=pk)
+            video.save()
+
+    context ={
+        'form':form,
+        'search':search
+
+    }
+    return render(request, 'resource/addvideo.html', context)
+
 

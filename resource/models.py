@@ -13,3 +13,7 @@ class Video (models.Model):
     url = models.URLField()
     youtube_id = models.CharField(max_length=400)
     source = models.ForeignKey(Source,on_delete=models.CASCADE)
+
+    
+    def __str__(self):
+        return self.title

@@ -14,5 +14,7 @@ urlpatterns = [
     path('resource/<int:pk>',views.DetailSource.as_view() , name='detail_source'),
     path('resource/<int:pk>/update',views.UpdateSource.as_view() , name='update_source'),
     path('resource/<int:pk>/delete',views.DeleteSource.as_view() , name='delete_source'),
+    #Video Part 
+    path('resource/<int:pk>/addvideo',views.add_video , name='add_video'),
 
 ]
