@@ -5,6 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate , login
 from .models import *
 from .forms import VideoForm, SearchForm
+from django.http import Http404
+import urllib
+from django.forms.utils import ErrorList
+import requests
+
+YOUTUBE_API_KEY= 'AIzaSyC4lcTzgTq_nmssqOJSYzJ5Uewn6Fbtz0U'
 
 
 
@@ -62,22 +68,39 @@ class DeleteSource (generic.DeleteView):
 def add_video(request, pk):
     form = VideoForm()
     search= SearchForm()
+    source =Source.objects.get(pk=pk)
+    if not source.user== request.user:
+        raise Http404
 
     if request.method == 'POST':
-        data_form = VideoForm(request.POST)
-        if data_form.is_valid():
+        form = VideoForm(request.POST)
+        if form.is_valid():
             video = Video()
-            video.url =data_form.cleaned_data['url']
-            video.title =data_form.cleaned_data['title']
-            video.youtube_id =data_form.cleaned_data['youtube_id']
-            video.source = Source.objects.get(pk=pk)
-            video.save()
+            video.source= source
+            video.url =form.cleaned_data['url']
+            parsed_url = urllib.parse.urlparse(video.url)
+            video_id = urllib.parse.parse_qs(parsed_url.query).get('v')
+            if video_id :
+                video.youtube_id = video_id[0]
+                response= requests.get(f'https://www.googleapis.com/youtube/v3/videos?part=snippet&id={ video_id[0] }&key={ YOUTUBE_API_KEY }')
+                json = response.json()
+                title = json['items'][0]['snippet']['title']
+                video.title = title
+                video.save()
+                return redirect('detail_source',pk)
+            else:
+                errors= form._errors.setdefault('url', ErrorList())
+                errors.append(" Its need to be a YouTube URL , Please check your url")
 
     context ={
         'form':form,
-        'search':search
+        'search':search,
+        'source':source,
 
     }
     return render(request, 'resource/addvideo.html', context)
+
+
+
 
 
