@@ -1,3 +1,20 @@
 body {
     background-color: rgb(255, 255, 255);
 }
+
+#newid {
+    display: inline !important;
+}
+
+.leftone {
+    display: inline;
+    float: right;
+
+}
+
+body h2 {
+
+    font-size: 25px;
+    margin-right: 5rem;
+
+}

@@ -1,10 +1,32 @@
 {% extends 'resource/main.html' %}
 
 {% block content %}
+<div class="mt-4"></div>
+<h1 class="display-4">{{ source.title }}</h1>
+<h4 class="text-muted lead" id="newid">Resource of {{ source.user.username }}</h4>
 
-<h3>Details Page</h3>
-<br>
-<h1>{{source.title}}</h1>
-<p class="text-muted">{{source.user.username}}</p>
-
+<div class="leftone">
+    {% if user.id == source.user.id %}
+    <a href="{% url 'delete_source' source.id %}" class="btn btn-danger btn-sm">Delete</a>
+    <a href="{% url 'update_source' source.id %}" class="btn btn-dark btn-sm">Edit</a>
+    <a href="{% url 'add_video' source.id %}" class="btn btn-info btn-sm">Add Video</a>
+    {% endif %}
+</div>
+<div class="row mt-3">
+    {% for video in source.video_set.all %}
+    <div class="col-md-4 mt-3">
+        <div class="card mb-4 shadow-sm">
+            <iframe width="100%" height="225" src="https://www.youtube.com/embed/{{ video.youtube_id }}" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <div class="card-body">
+                <p class="card-text">{{ video.title }}</p>
+                {% if user.id == source.user.id %}
+                <a href="{% url 'delete_video' video.id %}" class="btn btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

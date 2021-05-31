@@ -9,6 +9,8 @@ from django.http import Http404 , JsonResponse
 import urllib
 from django.forms.utils import ErrorList
 import requests
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 YOUTUBE_API_KEY= 'AIzaSyC4lcTzgTq_nmssqOJSYzJ5Uewn6Fbtz0U'
 
@@ -18,6 +20,7 @@ def home (request):
     title = 'Hello there'
     return render(request, 'resource/home.html' , {'title':title})
 
+@login_required
 def dashboard(request):
 
     sources = Source.objects.filter(user=request.user,)
@@ -43,7 +46,7 @@ class Signup(generic.CreateView):
 
 
 
-class CreateSource(generic.CreateView):
+class CreateSource(LoginRequiredMixin,generic.CreateView):
     model = Source
     fields= ['title']
     template_name = 'resource/create_source.html'
@@ -56,21 +59,35 @@ class CreateSource(generic.CreateView):
         return redirect ('dashboard')
 
 
-class DetailSource (generic.DetailView):
+class DetailSource (LoginRequiredMixin,generic.DetailView):
     model = Source
     template_name= 'resource/details.html'
 
-class UpdateSource (generic.UpdateView):
+class UpdateSource (LoginRequiredMixin, generic.UpdateView):
     model = Source
     template_name= 'resource/update.html'
     fields= ['title']
     success_url= reverse_lazy('dashboard')
 
-class DeleteSource (generic.DeleteView):
+    def get_object(self):
+        source = super(UpdateSource, self).get_object()
+        if not source.user == self.request.user:
+            raise Http404
+
+        return source
+class DeleteSource (LoginRequiredMixin ,generic.DeleteView):
     model = Source
     template_name= 'resource/delete.html'
     success_url= reverse_lazy('dashboard')
 
+    def get_object(self):
+        source = super(DeleteSource, self).get_object()
+        if not source.user == self.request.user:
+            raise Http404
+
+        return source
+
+@login_required
 def add_video(request, pk):
     form = VideoForm()
     search= SearchForm()
@@ -108,7 +125,7 @@ def add_video(request, pk):
 
 
 
-
+@login_required
 def video_search(request):
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
@@ -118,7 +135,14 @@ def video_search(request):
         return JsonResponse (response.json())
     return JsonResponse ({'error':'Not Working Right Now'})
 
-class DeleteVideo (generic.DeleteView):
+class DeleteVideo (LoginRequiredMixin ,generic.DeleteView):
     model = Video
     template_name= 'resource/deletevideo.html'
     success_url= reverse_lazy('dashboard')
+
+    def get_object(self):
+        video = super(DeleteVideo, self).get_object()
+        if not video.source.user == self.request.user:
+            raise Http404
+
+        return video 

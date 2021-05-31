@@ -2,20 +2,22 @@
 
 {% block content %}
 
-<h3>Dashboard</h3>
 
-<div class="text-center">
-    <h1>{{ user.username }}'s Resource of Videos </h1>
+<br>
+
+<div class="text-center mt-4 mb-4">
+    <h1 class="display-4">{{ user.username }}'s Resource of Videos </h1>
+    <br>
     <a href="{% url 'create_source' %}" class="btn btn-primary">Create New Resource</a>
 </div>
-
+<hr>
 {% for source in sources %}
-
-<h2><a href="{% url 'detail_source' source.id %}">{{ source.title }}</a></h2>
-<a href="{% url 'delete_source' source.id %}" class="btn btn-danger">Delete</a>
-<a href="{% url 'update_source' source.id %}" class="btn btn-primary">Edit</a>
-<a href="{% url 'add_video' source.id %}" class="btn btn-primary">Add Video</a>
-
+<div class="mt-4">
+    <h2><a href="{% url 'detail_source' source.id %}">{{ source.title }}</a></h2>
+    <a href="{% url 'delete_source' source.id %}" class="btn btn-danger btn-sm ">Delete</a>
+    <a href="{% url 'update_source' source.id %}" class="btn btn-dark btn-sm ">Edit</a>
+    <a href="{% url 'add_video' source.id %}" class="btn btn-info btn-sm ">Add Video</a>
+</div>
 <div class="row">
     {% for video in source.video_set.all %}
     <div class="col-md-4 mt-3">

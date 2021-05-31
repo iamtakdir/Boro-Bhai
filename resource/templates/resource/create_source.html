@@ -1,13 +1,15 @@
 {% extends 'resource/main.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
-<h3>Create NOW</h3>
+<div class="mt-4 text-center">
 
-<form action="" method="POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="btn btn-success">Smash</button>
-</form>
+    <h3 class="display-4 mb-4"> <small>Create Your Resource</small></h3>
 
+    <form action="" method="POST" class="form-group">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="btn btn-success">Smash</button>
+    </form>
+</div>
 {% endblock %}

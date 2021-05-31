@@ -1,27 +1,34 @@
 {% extends 'resource/main.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
+<div class="text-center mt-4">
+    <h3 class="display-4 mb-4"><small>Add videos to {{source.title}}</small></h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-5  mb-4">
+            <h2>Add Video URL</h2>
+            <form action="" method="POST" id="submit_video">
+                {% csrf_token %}
 
-<h3>Add videos to {{source.title}}</h3>
+                <div class="form-group {% if field.errors %} alert alert-danger {% endif %}">
 
-<form action="" method="POST" id="submit_video">
-    {% csrf_token %}
-    {% for field in form %}
-    <div class="form-group {% if field.errors %} alert alert-danger {% endif %}">
+                    {{form|crispy }}
 
-        {{field.errors}}
-        {{field.label_tag}}
-        {{field}}
+                </div>
 
+                <button type="submit" class="btn btn-success">Smash</button>
+            </form>
+        </div>
+        <div class="col-md-5 mb-4">
+            <h2>OR Search Resource</h2>
+            <form action="" method="POST">
+                {{search |crispy}}
+            </form>
+        </div>
     </div>
-    {% endfor %}
-    <button type="submit" class="btn btn-success">Smash</button>
-</form>
-<h2>OR Search Resource</h2>
-<form action="" method="POST">
-    {{search}}
-</form>
-
+</div>
 <div id="search_results">
+
 
 
 </div>
