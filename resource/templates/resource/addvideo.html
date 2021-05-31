@@ -3,7 +3,7 @@
 
 <h3>Add videos to {{source.title}}</h3>
 
-<form action="" method="POST">
+<form action="" method="POST" id="submit_video">
     {% csrf_token %}
     {% for field in form %}
     <div class="form-group {% if field.errors %} alert alert-danger {% endif %}">

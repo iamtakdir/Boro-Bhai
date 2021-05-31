@@ -20,11 +20,17 @@ def home (request):
 
 def dashboard(request):
 
-    return render (request, 'resource/dashboard.html')
+    sources = Source.objects.filter(user=request.user,)
+
+    context={
+        'sources':sources
+    }
+
+    return render (request, 'resource/dashboard.html',context)
 
 class Signup(generic.CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('dashboard')
     template_name= 'registration/signup.html'
 
     def form_valid(self, form):
@@ -106,7 +112,13 @@ def add_video(request, pk):
 def video_search(request):
     search_form = SearchForm(request.GET)
     if search_form.is_valid():
-        form = search_form.cleaned_data['search']
+        encoded_search= urllib.parse.quote(search_form.cleaned_data['search'])
+        response = requests.get(f'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&q={ encoded_search }&key={ YOUTUBE_API_KEY }')
 
-        return JsonResponse ({'hello':form})
-    return JsonResponse ({'hello':'Not Working Rightnow'})
+        return JsonResponse (response.json())
+    return JsonResponse ({'error':'Not Working Right Now'})
+
+class DeleteVideo (generic.DeleteView):
+    model = Video
+    template_name= 'resource/deletevideo.html'
+    success_url= reverse_lazy('dashboard')
