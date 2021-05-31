@@ -70,7 +70,7 @@ pytestdebug.log
 
 # Translations
 *.mo
-
+db.sqlite3
 # Django stuff:
 *.sqlite3
 # Flask stuff:

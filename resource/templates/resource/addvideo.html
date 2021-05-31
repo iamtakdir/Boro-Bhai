@@ -1,7 +1,7 @@
 {% extends 'resource/main.html' %}
 {% block content %}
 
-<h3>Add videos to your resource</h3>
+<h3>Add videos to {{source.title}}</h3>
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -20,5 +20,10 @@
 <form action="" method="POST">
     {{search}}
 </form>
+
+<div id="search_results">
+
+
+</div>
 
 {% endblock %}
