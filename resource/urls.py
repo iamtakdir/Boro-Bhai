@@ -4,19 +4,19 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.home , name= 'home'),
-    path('dashboard', views.dashboard , name= 'dashboard'),
+    path('dashboard/', views.dashboard , name= 'dashboard'),
     #auth 
-    path('signup',views.Signup.as_view(), name= 'signup'),
-    path('login',auth_views.LoginView.as_view(), name= 'login'),
-    path('logout',auth_views.LogoutView.as_view(), name= 'logout'),
+    path('signup/',views.Signup.as_view(), name= 'signup'),
+    path('login/',auth_views.LoginView.as_view(), name= 'login'),
+    path('logout/',auth_views.LogoutView.as_view(), name= 'logout'),
     #Resource 
-    path('resource/create',views.CreateSource.as_view() , name='create_source'),
-    path('resource/<int:pk>',views.DetailSource.as_view() , name='detail_source'),
-    path('resource/<int:pk>/update',views.UpdateSource.as_view() , name='update_source'),
-    path('resource/<int:pk>/delete',views.DeleteSource.as_view() , name='delete_source'),
+    path('resource/create/',views.CreateSource.as_view() , name='create_source'),
+    path('resource/<int:pk>/',views.DetailSource.as_view() , name='detail_source'),
+    path('resource/<int:pk>/update/',views.UpdateSource.as_view() , name='update_source'),
+    path('resource/<int:pk>/delete/',views.DeleteSource.as_view() , name='delete_source'),
     #Video Part 
-    path('resource/<int:pk>/addvideo',views.add_video , name='add_video'),
-    path('resource/video/<int:pk>/delete',views.DeleteVideo.as_view() , name='delete_video'),
-    path('video/search',views.video_search , name='video_search'),
+    path('resource/<int:pk>/addvideo/',views.add_video , name='add_video'),
+    path('resource/video/<int:pk>/delete/',views.DeleteVideo.as_view() , name='delete_video'),
+    path('video/search/',views.video_search , name='video_search'),
 
 ]
