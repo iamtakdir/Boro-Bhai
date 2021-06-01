@@ -31,7 +31,7 @@
 var delayTimer;
 $('#id_search').keyup(function () {
     clearTimeout(delayTimer);
-    $('#search_results').text('<h4>Loading ... ...</h4>');
+    $('#search_results').text('Loading ... ... ....');
     delayTimer = setTimeout(function () {
         var text = $('#id_search').val();
         $.ajax({

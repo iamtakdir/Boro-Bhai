@@ -18,7 +18,7 @@ YOUTUBE_API_KEY= 'AIzaSyC4lcTzgTq_nmssqOJSYzJ5Uewn6Fbtz0U'
 
 def home (request):
     title = 'Hello there'
-    return render(request, 'resource/home.html' , {'title':title})
+    return render(request, 'resource/dashboard.html' , {'title':title})
 
 @login_required
 def dashboard(request):

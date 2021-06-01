@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-)h^mq0hk%3n!xx8rv-&&=w!8nnfnsus=e^kp_@1!)7zg1vft@-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -135,3 +134,5 @@ LOGIN_URL= 'login'
 LOGIN_REDIRECT_URL= 'dashboard'
 LOGOUT_REDIRECT_URL= 'home'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# Activate Django-Heroku.
+django_heroku.settings(locals())
