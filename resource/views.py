@@ -59,7 +59,7 @@ class CreateSource(LoginRequiredMixin,generic.CreateView):
         return redirect ('dashboard')
 
 
-class DetailSource (LoginRequiredMixin,generic.DetailView):
+class DetailSource (generic.DetailView):
     model = Source
     template_name= 'resource/details.html'
 
